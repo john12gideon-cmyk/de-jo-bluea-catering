@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Security headers (effective when served as meta on static hosting) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' data:;
+    style-src 'self' 'unsafe-inline';
+    script-src 'self' https://www.gstatic.com 'unsafe-inline';
+    connect-src 'self' https://firestore.googleapis.com https://storage.googleapis.com https://www.googleapis.com;
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+  ">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=()">
+  <meta name="referrer" content="no-referrer"/>
+
+  <title>DE-JO-BLUEA catering and rentals services</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header / Hero -->
+  <header class="hero">
+    <div class="container">
+      <h1>DE-JO-BLUEA catering and rentals services</h1>
+      <p>Fresh crayfish • Elegant rentals • Quality firewood</p>
+      <a href="#crayfish" class="btn">Shop now</a>
+    </div>
+  </header>
+
+  <!-- Sticky mini cart button -->
+  <button id="openCartBtn" class="floating-cart-btn">Cart (<span id="cartCount">0</span>)</button>
+
+  <main>
+    <!-- Crayfish section -->
+    <section id="crayfish" class="section">
+      <div class="container">
+        <h2>Crayfish and shrimps</h2>
+        <p>Locally sourced crayfish/shrimps. Pricing is negotiable depending on custard size and current market rates.</p>
+        <div class="grid">
+          <!-- Half custard -->
+          <div class="card">
+            <img src="images/dried-shrimp.jpg" alt="Dried small shrimp"/>
+            <h3>Half custard (crayfish/shrimps)</h3>
+            <p class="price"><strong>Price:</strong> To be negotiated</p>
+            <label>Quantity (half custard)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Half custard quantity"/>
+            <button class="add-to-cart"
+              data-id="crayfish-half-custard"
+              data-name="Half custard (crayfish/shrimps)"
+              data-price="0"
+              data-notes="Price to be negotiated">Add to cart</button>
+          </div>
+
+          <!-- Full custard -->
+          <div class="card">
+            <img src="images/dried-shrimp.jpg" alt="Dried small shrimp"/>
+            <h3>Full custard (crayfish/shrimps)</h3>
+            <p class="price"><strong>Price:</strong> To be negotiated</p>
+            <label>Quantity (full custard)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Full custard quantity"/>
+            <button class="add-to-cart"
+              data-id="crayfish-full-custard"
+              data-name="Full custard (crayfish/shrimps)"
+              data-price="0"
+              data-notes="Price to be negotiated">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cooler rentals (placed close to crayfish) -->
+    <section id="coolers" class="section alt">
+      <div class="container">
+        <h2>Cooler rentals (per day)</h2>
+        <p>Clean coolers for events and storage. Choose your size.</p>
+        <div class="grid">
+          <div class="card">
+            <img src="images/cooler-large.jpg" alt="Large cooler"/>
+            <h3>Large cooler — 100 liters</h3>
+            <p class="price">₦ <span data-price="COOLER_LARGE_PRICE"></span></p>
+            <label>Quantity (units)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Large cooler quantity"/>
+            <button class="add-to-cart"
+              data-id="cooler-large"
+              data-name="Large cooler (100L) per day"
+              data-price="COOLER_LARGE_PRICE">Add to cart</button>
+          </div>
+
+          <div class="card">
+            <img src="images/cooler-medium.jpg" alt="Medium cooler"/>
+            <h3>Medium cooler — 50 liters</h3>
+            <p class="price">₦ <span data-price="COOLER_MEDIUM_PRICE"></span></p>
+            <label>Quantity (units)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Medium cooler quantity"/>
+            <button class="add-to-cart"
+              data-id="cooler-medium"
+              data-name="Medium cooler (50L) per day"
+              data-price="COOLER_MEDIUM_PRICE">Add to cart</button>
+          </div>
+
+          <div class="card">
+            <img src="images/cooler-small.jpg" alt="Small cooler"/>
+            <h3>Small cooler — 20 liters</h3>
+            <p class="price">₦ <span data-price="COOLER_SMALL_PRICE"></span></p>
+            <label>Quantity (units)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Small cooler quantity"/>
+            <button class="add-to-cart"
+              data-id="cooler-small"
+              data-name="Small cooler (20L) per day"
+              data-price="COOLER_SMALL_PRICE">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rentals section -->
+    <section id="rentals" class="section">
+      <div class="container">
+        <h2>Rentals</h2>
+        <p>Buffet dishes, plates & bowls, heavy spoon sets, and chairs. Charged per day.</p>
+        <div class="grid">
+          <div class="card">
+            <img src="images/golden-warmers.jpg" alt="Golden buffet warmers"/>
+            <h3>Buffet dishes (per day)</h3>
+            <p class="price">₦ <span data-price="WARMER_PRICE"></span></p>
+            <label>Quantity (units)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Buffet dishes quantity"/>
+            <button class="add-to-cart"
+              data-id="buffet-dishes"
+              data-name="Buffet dishes (per day)"
+              data-price="WARMER_PRICE">Add to cart</button>
+          </div>
+
+          <div class="card">
+            <img src="images/mint-plates-bowls.jpg" alt="Plates and bowls"/>
+            <h3>Plates & bowls (per day)</h3>
+            <p class="price">₦ <span data-price="PLATES_BOWLS_PRICE"></span></p>
+            <label>Quantity (sets)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Plates & bowls quantity"/>
+            <button class="add-to-cart"
+              data-id="plates-bowls"
+              data-name="Plates & bowls (per day)"
+              data-price="PLATES_BOWLS_PRICE">Add to cart</button>
+          </div>
+
+          <div class="card">
+            <img src="images/spoons.jpg" alt="Spoons"/>
+            <h3>Heavy spoon sets (per day)</h3>
+            <p class="price">₦ <span data-price="SPOONS_SET_PRICE"></span></p>
+            <label>Quantity (sets)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Spoon sets quantity"/>
+            <button class="add-to-cart"
+              data-id="spoons-set"
+              data-name="Heavy spoon sets (per day)"
+              data-price="SPOONS_SET_PRICE">Add to cart</button>
+          </div>
+
+          <div class="card">
+            <img src="images/chairs.jpg" alt="Event chairs"/>
+            <h3>Chairs (per day)</h3>
+            <p class="price">₦ <span data-price="CHAIR_PRICE"></span></p>
+            <label>Quantity (chairs)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Chairs quantity"/>
+            <button class="add-to-cart"
+              data-id="chairs"
+              data-name="Chairs (per day)"
+              data-price="CHAIR_PRICE">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Firewood section -->
+    <section id="firewood" class="section">
+      <div class="container">
+        <h2>Firewood bundles</h2>
+        <p>Bundles tied and ready for cooking or outdoor events. Choose a size.</p>
+        <div class="grid">
+          <div class="card">
+            <img src="images/firewood-bundles-1.jpg" alt="Firewood bundles small"/>
+            <h3>Firewood — Small bundle</h3>
+            <p class="price">₦ <span data-price="FIREWOOD_SMALL_PRICE"></span></p>
+            <label>Quantity (bundles)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Small firewood quantity"/>
+            <button class="add-to-cart"
+              data-id="firewood-small"
+              data-name="Firewood — Small bundle"
+              data-price="FIREWOOD_SMALL_PRICE">Add to cart</button>
+          </div>
+
+          <div class="card">
+            <img src="images/firewood-bundles-1.jpg" alt="Firewood bundles medium"/>
+            <h3>Firewood — Medium bundle</h3>
+            <p class="price">₦ <span data-price="FIREWOOD_MEDIUM_PRICE"></span></p>
+            <label>Quantity (bundles)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Medium firewood quantity"/>
+            <button class="add-to-cart"
+              data-id="firewood-medium"
+              data-name="Firewood — Medium bundle"
+              data-price="FIREWOOD_MEDIUM_PRICE">Add to cart</button>
+          </div>
+
+          <div class="card">
+            <img src="images/firewood-bundles-1.jpg" alt="Firewood bundles large"/>
+            <h3>Firewood — Large bundle</h3>
+            <p class="price">₦ <span data-price="FIREWOOD_LARGE_PRICE"></span></p>
+            <label>Quantity (bundles)</label>
+            <input type="number" min="1" value="1" class="qty" aria-label="Large firewood quantity"/>
+            <button class="add-to-cart"
+              data-id="firewood-large"
+              data-name="Firewood — Large bundle"
+              data-price="FIREWOOD_LARGE_PRICE">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Info -->
+    <section id="contact" class="section alt">
+      <div class="container">
+        <h2>Contact & delivery</h2>
+        <ul class="info">
+          <li><strong>Phone:</strong> +2348106153005</li>
+          <li><strong>WhatsApp:</strong> <a rel="noopener" href="https://wa.me/+2348106153005" target="_blank">Chat on WhatsApp</a></li>
+          <li><strong>Email:</strong> ofofongideon708@gmail.com</li>
+          <li><strong>Location:</strong> shelter afrique extension, Uyo Akwa ibom state</li>
+        </ul>
+        <p class="muted">Delivery is on customers' preference and negotiable depending on the location.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cart drawer -->
+  <div id="cartDrawer" class="cart-drawer" aria-modal="true" role="dialog">
+    <div class="cart-header">
+      <h3>Your cart</h3>
+      <button id="closeCartBtn" class="icon-btn" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="totals">
+        <div><strong>Subtotal:</strong> ₦ <span id="cartSubtotal">0</span></div>
+      </div>
+      <button id="checkoutBtn" class="btn primary">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Checkout modal -->
+  <div id="checkoutModal" class="modal" aria-modal="true" role="dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Checkout</h3>
+        <button id="closeCheckoutBtn" class="icon-btn" aria-label="Close checkout">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <h4>Your details</h4>
+        <form id="checkoutForm" autocomplete="off">
+          <div class="form-row">
+            <label>Full name</label>
+            <input type="text" name="name" required maxlength="80" />
+          </div>
+          <div class="form-row">
+            <label>Phone</label>
+            <input type="tel" name="phone" required pattern="^[+0-9]{8,15}$" />
+          </div>
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" name="email" maxlength="120"/>
+          </div>
+          <div class="form-row">
+            <label>Notes (optional)</label>
+            <textarea name="notes" maxlength="500" placeholder="Pickup time, delivery directions, etc."></textarea>
+          </div>
+
+          <h4>Payment</h4>
+          <div class="bank-box">
+            <p><strong>Bank:</strong> Globus bank limited</p>
+            <p><strong>Account name:</strong> Ofofon Gideon Matthew</p>
+            <p><strong>Account number:</strong> 2003362084</p>
+            <p class="muted">Please make a bank transfer for the total amount. Upload proof below if available.</p>
+          </div>
+
+          <div class="form-row">
+            <label>Upload transfer receipt (optional)</label>
+            <input type="file" id="paymentProof" accept="image/*,.pdf"/>
+          </div>
+
+          <div class="form-row">
+            <label>Confirm payment status</label>
+            <select name="paymentStatus" required>
+              <option value="pending">I will transfer now</option>
+              <option value="paid">I have transferred</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn primary">Submit order</button>
+        </form>
+
+        <div id="checkoutNotice" class="notice"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <small>© <span id="year"></span> DE-JO-BLUEA catering and rentals services. All rights reserved.</small>
+      <a href="admin.html" class="admin-link">Admin</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+  </html>
