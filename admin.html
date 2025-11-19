@@ -1,1 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Orders</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .admin-wrap { max-width: 1100px; margin: 20px auto; padding: 0 16px; }
+    .admin-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; }
+    .orders { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+    .order { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 12px; }
+    .order h4 { margin: 6px 0 8px; }
+    .order .meta { color: #666; font-size: 13px; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px; }
+    .badge.paid { background: #e6ffed; border: 1px solid #b7f5c6; color: #146c43; }
+    .badge.pending { background: #fff7e8; border: 1px solid #ffe0a7; color: #8a5200; }
+    .order-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .danger { background: #b00020; color: #fff; }
+    .muted { color: #666; font-size: 12px; }
+    .login-box { padding: 12px; border: 1px solid #eee; border-radius: 12px; background: #fff; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <h2>Admin — Orders</h2>
 
+    <div class="login-box">
+      <label>Admin passcode</label>
+      <input type="password" id="adminPass" placeholder="Enter passcode"/>
+      <button id="loginBtn" class="btn">Unlock</button>
+      <p class="muted">Passcode is set in admin.js</p>
+    </div>
+
+    <div class="admin-bar">
+      <button id="refreshBtn" class="btn">Refresh</button>
+      <select id="filterPaid">
+        <option value="all">All</option>
+        <option value="paid">Paid</option>
+        <option value="pending">Pending</option>
+      </select>
+      <button id="exportBtn" class="btn">Export JSON</button>
+    </div>
+
+    <div id="orders" class="orders"></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
