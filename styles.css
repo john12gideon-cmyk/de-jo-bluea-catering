@@ -144,3 +144,75 @@
 .order-card .status.failed {
   color: var(--error);
 }
+
+/* Scoped: rating widget */
+#ratingSection {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.06);
+}
+
+#ratingSection .stars {
+  display: flex;
+  gap: 8px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #c8c8c8;
+}
+
+#ratingSection .stars span.active {
+  color: #f5b301; /* star gold */
+}
+
+#ratingSection #feedbackText {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* Scoped: admin theme only inside .admin-panel */
+.admin-panel {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.06);
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+.admin-panel .filter-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.admin-panel .filter-bar select,
+.admin-panel .filter-bar input {
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fff;
+  color: #222;
+}
+
+/* Order cards inside admin only */
+.admin-panel .order-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-left: 6px solid #9a8c98; /* subtle accent */
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.admin-panel .order-card .status.paid { color: #2a9d8f; }
+.admin-panel .order-card .status.pending { color: #9a8c98; }
+
+/* Don’t touch global .btn — scope admin buttons */
+.admin-panel .btn.primary { background: #4a4e69; color: #fff; }
+.admin-panel .btn.primary:hover { background: #3f435d; }
