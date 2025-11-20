@@ -27,11 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
       paymentStatus,
       createdAt: new Date()
     }).then(() => {
+      // Show success popup
+      alert("✅ Your order was submitted successfully!");
+
+      // Optional: also show message on page
       document.getElementById("checkoutNotice").textContent = "✅ Order submitted!";
+
+      // Reset the form
       form.reset();
     }).catch((error) => {
       console.error("Error saving order:", error);
-      alert("Something went wrong. Try again.");
-    });
-  });
-});
