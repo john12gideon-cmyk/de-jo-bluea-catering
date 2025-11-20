@@ -10,7 +10,6 @@
   <div class="admin-panel">
     <h2>Admin - Orders</h2>
 
-    <!-- Login box -->
     <div class="login-box">
       <label for="adminPass">Admin passcode</label>
       <input type="password" id="adminPass" placeholder="Enter passcode"/>
@@ -18,7 +17,6 @@
       <p class="muted">Passcode is set in <code>admin.js</code></p>
     </div>
 
-    <!-- Dashboard -->
     <div id="adminPanel" style="display:none;">
       <h2>Orders Dashboard</h2>
 
@@ -37,10 +35,7 @@
     </div>
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-  <script src="firebase.js"></script>
-  <script src="admin.js"></script>
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="admin.js"></script>
 </body>
 </html>
