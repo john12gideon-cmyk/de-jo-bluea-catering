@@ -260,23 +260,13 @@
 
       <div class="modal-body">
         <h4>Your details</h4>
-        <form id="checkoutForm" autocomplete="off">
-          <div class="form-row">
-            <label>Full name</label>
-            <input type="text" name="name" required maxlength="80" />
-          </div>
-          <div class="form-row">
-            <label>Phone</label>
-            <input type="tel" name="phone" required pattern="^[+0-9]{8,15}$" />
-          </div>
-          <div class="form-row">
-            <label>Email</label>
-            <input type="email" name="email" maxlength="120"/>
-          </div>
-          <div class="form-row">
-            <label>Notes (optional)</label>
-            <textarea name="notes" maxlength="500" placeholder="Pickup time, delivery directions, etc."></textarea>
-          </div>
+<form id="orderForm">
+  <input type="text" name="fullName" required>
+  <input type="tel" name="phone" required>
+  <input type="email" name="email" required>
+  <!-- other fields -->
+  <button type="submit" class="btn primary">Submit order</button>
+</form>
 
           <h4>Payment</h4>
           <div class="bank-box">
