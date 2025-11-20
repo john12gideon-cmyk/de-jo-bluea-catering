@@ -1,14 +1,14 @@
 /* ====== Admin config ====== */
 const ADMIN_PASSCODE = "524684";
 
-/* ====== Optional Firebase config (same keys as app.js) ====== */
+/* ====== Firebase config ====== */
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyB6asthrjc-7nv4JlyCt0on9HK-2JMD76C",
+  authDomain: "de-jo-bluea.firebaseapp.com",
+  projectId: "de-jo-bluea",
+  storageBucket: "de-jo-bluea.appspot.com",
+  messagingSenderId: "213345773472",
+  appId: "1:213345773472:web:5d0fbed7b68741e2c2e6c5"
 };
 
 const firebaseScripts = [
@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const ordersEl = document.getElementById("orders");
   const refreshBtn = document.getElementById("refreshBtn");
   const filterPaid = document.getElementById("filterPaid");
+  const searchInput = document.getElementById("searchInput");
   const adminPass = document.getElementById("adminPass");
   const loginBtn = document.getElementById("loginBtn");
   const exportBtn = document.getElementById("exportBtn");
@@ -57,10 +58,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   loginBtn.addEventListener("click", () => {
     if (adminPass.value === ADMIN_PASSCODE) {
       unlocked = true;
-      alert("Admin unlocked.");
+      document.getElementById("adminPanel").style.display = "block";
+      alert("✅ Admin unlocked.");
       fetchOrders();
     } else {
-      alert("Wrong passcode.");
+      alert("❌ Wrong passcode.");
     }
   });
 
@@ -80,44 +82,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const filter = filterPaid.value;
+    const query = searchInput.value.toLowerCase();
+
     const filtered = data.filter(o => {
-      if (filter === "all") return true;
-      if (filter === "paid") return o.payment?.status === "paid";
-      if (filter === "pending") return o.payment?.status === "pending";
-      return true;
+      const matchStatus =
+        filter === "all" ||
+        (filter === "paid" && o.paymentStatus === "paid") ||
+        (filter === "pending" && o.paymentStatus === "pending");
+
+      const matchSearch =
+        o.customer?.name?.toLowerCase().includes(query) ||
+        o.customer?.phone?.toLowerCase().includes(query);
+
+      return matchStatus && matchSearch;
     });
 
     ordersEl.innerHTML = "";
     filtered.forEach(o => {
       const div = document.createElement("div");
-      const paid = o.payment?.status === "paid";
+      const paid = o.paymentStatus === "paid";
       const subtotal = Number(o.subtotal || 0).toLocaleString("en-NG");
-      const itemsHtml = (o.items || []).map(i => {
-        const note = i.notes ? ` — (${i.notes})` : "";
-        return `<div>• ${i.name}${note} — ₦ ${Number(i.price).toLocaleString("en-NG")} x ${i.qty}</div>`;
-      }).join("");
 
-      div.className = "order";
+      div.className = "order-card";
       div.innerHTML = `
-        <h4>Order ${o.id}</h4>
-        <div class="meta">
-          <div><strong>Name:</strong> ${o.customer?.name || ""}</div>
-          <div><strong>Phone:</strong> ${o.customer?.phone || ""}</div>
-          <div><strong>Email:</strong> ${o.customer?.email || ""}</div>
-          <div><strong>Created:</strong> ${new Date(o.createdAt).toLocaleString()}</div>
-        </div>
-        <hr/>
-        <div>${itemsHtml}</div>
+        <h3>${o.customer?.name || "Unnamed"}</h3>
+        <p>Phone: ${o.customer?.phone || ""}</p>
+        <p>Email: ${o.customer?.email || ""}</p>
+        <p>Notes: ${o.notes || "—"}</p>
         <p><strong>Total:</strong> ₦ ${subtotal}</p>
-        <p><span class="badge ${paid ? "paid" : "pending"}">${paid ? "Paid" : "Pending"}</span></p>
-        ${o.payment?.proofUrl ? `<p><a href="${o.payment.proofUrl}" target="_blank">View payment proof</a></p>` : "<p class='muted'>No payment proof uploaded</p>"}
+        <p class="status ${paid ? "paid" : "pending"}">Status: ${paid ? "Paid" : "Pending"}</p>
         <div class="order-actions">
           <button class="btn" data-action="mark-paid" data-id="${o.id}">Mark paid</button>
           <button class="btn danger" data-action="mark-pending" data-id="${o.id}">Mark pending</button>
           <button class="btn" data-action="complete" data-id="${o.id}">Complete</button>
           <button class="btn danger" data-action="cancel" data-id="${o.id}">Cancel</button>
           <button class="btn" data-action="delete" data-id="${o.id}">Delete</button>
-          <button class="btn" data-action="set-total" data-id="${o.id}">Set negotiated total</button>
+          <button class="btn" data-action="set-total" data-id="${o.id}">Set total</button>
         </div>
       `;
       ordersEl.appendChild(div);
@@ -126,6 +126,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   refreshBtn.addEventListener("click", fetchOrders);
   filterPaid.addEventListener("change", fetchOrders);
+  searchInput.addEventListener("input", fetchOrders);
+
   exportBtn.addEventListener("click", () => {
     if (!unlocked) return alert("Unlock admin first.");
     const data = fb?.db ? "Export from Firestore not implemented" : readLocalOrders();
@@ -137,18 +139,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     URL.revokeObjectURL(url);
   });
 
-  // Actions
   ordersEl.addEventListener("click", async (e) => {
     const btn = e.target.closest("button");
-    if (!btn) return;
-    if (!unlocked) return alert("Unlock admin first.");
+    if (!btn || !unlocked) return;
     const id = btn.getAttribute("data-id");
     const action = btn.getAttribute("data-action");
 
     if (fb?.db) {
       const ref = fb.db.collection("orders").doc(id);
-      if (action === "mark-paid") await ref.update({ "payment.status": "paid" });
-      if (action === "mark-pending") await ref.update({ "payment.status": "pending" });
+      if (action === "mark-paid") await ref.update({ paymentStatus: "paid" });
+      if (action === "mark-pending") await ref.update({ paymentStatus: "pending" });
       if (action === "complete") await ref.update({ status: "completed" });
       if (action === "cancel") await ref.update({ status: "cancelled" });
       if (action === "delete") {
@@ -160,12 +160,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!isNaN(newTotal) && newTotal >= 0) await ref.update({ subtotal: newTotal });
       }
     } else {
-      // LocalStorage mode
       const orders = readLocalOrders();
       const idx = orders.findIndex(o => o.id === id);
       if (idx === -1) return;
-      if (action === "mark-paid") orders[idx].payment.status = "paid";
-      if (action === "mark-pending") orders[idx].payment.status = "pending";
+      if (action === "mark-paid") orders[idx].paymentStatus = "paid";
+      if (action === "mark-pending") orders[idx].paymentStatus = "pending";
       if (action === "complete") orders[idx].status = "completed";
       if (action === "cancel") orders[idx].status = "cancelled";
       if (action === "delete") {
@@ -182,6 +181,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     await fetchOrders();
   });
 
-  // Initial fetch (shows lock prompt until unlocked)
   await fetchOrders();
 });
