@@ -73,3 +73,14 @@ a:hover { text-decoration: underline; }
 .bank-box { background: #fff8e6; border: 1px solid #ffe2a5; padding: 10px; border-radius: 10px; margin: 12px 0; }
 .notice { margin-top: 10px; padding: 10px; border-radius: 10px; background: #f6fdf6; border: 1px solid #d7f0d7; color: #1b5e20; }
 .muted { color: var(--muted); font-size: 13px; }
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.btn.primary {
+  margin-top: 1rem;
+  align-self: flex-start;
+                                                  }
