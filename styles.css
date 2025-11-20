@@ -1,3 +1,4 @@
+/* ===== 0. Configuration & Variables ===== */
 :root {
   --primary: #4a4e69;
   --accent: #9a8c98;
@@ -7,173 +8,98 @@
   --muted: #666;
   --success: #2a9d8f;
   --error: #e63946;
+  --warning: #f77f00; /* Added for warnings/notes */
+  --font-family: 'Arial', sans-serif;
 }
 
-/* ===== Order Form ===== */
-#orderForm {
-  background: var(--light);
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* ------------------------------------------- */
+/* ===== 1. Global & Reset (Crucial for deployed look) ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-#orderForm input,
-#orderForm textarea,
-#orderForm select {
-  padding: 0.75rem;
-  border: 1px solid var(--highlight);
-  border-radius: 8px;
-  font-size: 1rem;
-  background: #fff;
+body {
+  font-family: var(--font-family);
+  background-color: var(--light); /* Sets the global background */
   color: var(--dark);
-  transition: border-color 0.3s ease;
+  line-height: 1.6;
 }
 
-#orderForm input:focus,
-#orderForm textarea:focus,
-#orderForm select:focus {
-  border-color: var(--accent);
-  outline: none;
+h1, h2, h3, h4 {
+  color: var(--primary);
+  margin-top: 1rem;
 }
 
-#orderForm button.btn.primary {
-  background-color: var(--primary);
-  color: var(--light);
-  border: none;
+/* Global button styles */
+.btn {
+  display: inline-block;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 }
 
-#orderForm button.btn.primary:hover {
+/* Primary Button (used in form and admin) */
+.btn.primary {
+  background-color: var(--primary);
+  color: var(--light);
+}
+
+.btn.primary:hover {
   background-color: var(--accent);
 }
 
-.notice {
-  margin-top: 1rem;
-  font-weight: bold;
-  color: var(--success);
-  font-size: 1rem;
-}
-
-.bank-box {
-  background: var(--highlight);
-  border: 1px solid var(--accent);
-  padding: 1rem;
-  border-radius: 10px;
+/* Default button */
+.btn {
+  background-color: var(--highlight);
   color: var(--dark);
 }
-
-/* ===== Admin Dashboard ===== */
-.admin-panel {
-  background: var(--light);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.06);
-  max-width: 1000px;
-  margin: 2rem auto;
+.btn:hover {
+    background-color: var(--accent);
 }
 
-.admin-panel h2 {
-  font-size: 24px;
-  margin-bottom: 1rem;
-  color: var(--primary);
+/* Danger/Cancel button */
+.btn.danger {
+  background-color: var(--error);
+  color: var(--light);
+}
+.btn.danger:hover {
+  background-color: #c42938;
 }
 
-.admin-panel .filter-bar {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.admin-panel .filter-bar select,
-.admin-panel .filter-bar input {
-  padding: 0.6rem;
-  border: 1px solid var(--highlight);
-  border-radius: 6px;
-  font-size: 1rem;
-  background: #fff;
-  color: var(--dark);
-}
-
-.admin-panel .orders {
-  display: grid;
-  gap: 1rem;
-}
-
-.order-card {
-  background: #fff;
-  border: 1px solid var(--highlight);
-  border-left: 6px solid var(--accent);
+/* ------------------------------------------- */
+/* ===== 2. Layout & Main Content (Fixes spacing/center issues) ===== */
+.container {
+  max-width: 1200px; /* Standard main content width */
+  margin: 0 auto;
   padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-.order-card h3 {
-  margin: 0 0 0.5rem;
-  font-size: 18px;
-  color: var(--primary);
+header {
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+header h1 {
+  color: var(--light);
 }
 
-.order-card p {
-  margin: 0.25rem 0;
-  color: var(--muted);
-  font-size: 14px;
+/* Card styles for products/items */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
 }
 
-.order-card .status {
-  font-weight: bold;
-  color: var(--success);
-}
-
-.order-card .status.pending {
-  color: var(--accent);
-}
-
-.order-card .status.failed {
-  color: var(--error);
-}
-
-.admin-panel .btn.primary {
-  background: var(--primary);
-  color: #fff;
-}
-
-.admin-panel .btn.primary:hover {
-  background: #3f435d;
-}
-
-/* ===== Rating Widget ===== */
-#ratingSection {
-  background: #fff;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.06);
-}
-
-#ratingSection .stars {
-  display: flex;
-  gap: 8px;
-  font-size: 28px;
-  cursor: pointer;
-  color: #c8c8c8;
-}
-
-#ratingSection .stars span.active {
-  color: #f5b301;
-}
-
-#ratingSection #feedbackText {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-top: 10px;
-}
+.card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius:
