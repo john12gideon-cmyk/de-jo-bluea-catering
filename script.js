@@ -21,3 +21,34 @@ document.querySelector(".btn.primary").addEventListener("click", function(e) {
     alert("Something went wrong. Try again.");
   });
 });
+
+document.getElementById("orderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = e.target.fullName.value;
+  const phone = e.target.phone.value;
+  const email = e.target.email.value;
+  const notes = e.target.notes.value;
+  const paymentStatus = e.target.paymentStatus.value;
+  const receiptFile = document.getElementById("paymentProof").files[0];
+
+  if (!name || !phone || !email || !paymentStatus) {
+    alert("Please fill out all required fields.");
+    return;
+  }
+
+  db.collection("orders").add({
+    name,
+    phone,
+    email,
+    notes,
+    paymentStatus,
+    createdAt: new Date()
+  }).then(() => {
+    document.getElementById("checkoutNotice").textContent = "✅ Order submitted!";
+    e.target.reset();
+  }).catch((error) => {
+    console.error("Error saving order:", error);
+    alert("Something went wrong.");
+  });
+});
