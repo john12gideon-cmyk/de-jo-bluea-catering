@@ -1,39 +1,10 @@
+// admin.js
+
+// Import required utility from the new firebase.js
+import { loadFirebaseIfConfigured } from "./firebase.js";
+
 /* ====== Admin config ====== */
 const ADMIN_PASSCODE = "524684";
-
-/* ====== Firebase config ====== */
-const firebaseConfig = {
-  apiKey: "AIzaSyB6asthrjc-7nv4JlyCt0on9HK-2JMD76C",
-  authDomain: "de-jo-bluea.firebaseapp.com",
-  projectId: "de-jo-bluea",
-  storageBucket: "de-jo-bluea.appspot.com",
-  messagingSenderId: "213345773472",
-  appId: "1:213345773472:web:5d0fbed7b68741e2c2e6c5"
-};
-
-const firebaseScripts = [
-  "https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js",
-  "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"
-];
-
-function loadFirebaseIfConfigured() {
-  return new Promise((resolve) => {
-    if (!firebaseConfig.apiKey) { resolve(null); return; }
-    let loaded = 0;
-    firebaseScripts.forEach(src => {
-      const s = document.createElement('script');
-      s.src = src;
-      s.onload = () => {
-        loaded++;
-        if (loaded === firebaseScripts.length) {
-          firebase.initializeApp(firebaseConfig);
-          resolve({ db: firebase.firestore() });
-        }
-      };
-      document.head.appendChild(s);
-    });
-  });
-}
 
 function readLocalOrders() {
   const key = "dejo_orders";
@@ -53,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const exportBtn = document.getElementById("exportBtn");
 
   let unlocked = false;
+  // Use the centralized loader
   let fb = await loadFirebaseIfConfigured();
 
   loginBtn.addEventListener("click", () => {
@@ -75,9 +47,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let data = [];
     if (fb?.db) {
+      // Use Firestore
       const snapshot = await fb.db.collection("orders").orderBy("createdAt", "desc").get();
-      data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate()?.toISOString() || new Date().toISOString() }));
     } else {
+      // Use Local Storage
       data = readLocalOrders();
     }
 
@@ -87,8 +61,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const filtered = data.filter(o => {
       const matchStatus =
         filter === "all" ||
-        (filter === "paid" && o.paymentStatus === "paid") ||
-        (filter === "pending" && o.paymentStatus === "pending");
+        (filter === "paid" && o.payment?.status === "paid") || // Use o.payment.status
+        (filter === "pending" && o.payment?.status === "pending"); // Use o.payment.status
 
       const matchSearch =
         o.customer?.name?.toLowerCase().includes(query) ||
@@ -99,16 +73,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     ordersEl.innerHTML = "";
     filtered.forEach(o => {
-      const div = document.createElement("div");
-      const paid = o.paymentStatus === "paid";
+      const paid = o.payment?.status === "paid"; // Use o.payment.status
       const subtotal = Number(o.subtotal || 0).toLocaleString("en-NG");
+      const orderDate = new Date(o.createdAt).toLocaleString();
 
+      const div = document.createElement("div");
       div.className = "order-card";
       div.innerHTML = `
         <h3>${o.customer?.name || "Unnamed"}</h3>
+        <p>Order ID: ${o.id}</p>
+        <p>Date: ${orderDate}</p>
         <p>Phone: ${o.customer?.phone || ""}</p>
         <p>Email: ${o.customer?.email || ""}</p>
-        <p>Notes: ${o.notes || "—"}</p>
+        <p>Notes: ${o.customer?.notes || "—"}</p>
         <p><strong>Total:</strong> ₦ ${subtotal}</p>
         <p class="status ${paid ? "paid" : "pending"}">Status: ${paid ? "Paid" : "Pending"}</p>
         <div class="order-actions">
@@ -116,9 +93,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           <button class="btn danger" data-action="mark-pending" data-id="${o.id}">Mark pending</button>
           <button class="btn" data-action="complete" data-id="${o.id}">Complete</button>
           <button class="btn danger" data-action="cancel" data-id="${o.id}">Cancel</button>
-          <button class="btn" data-action="delete" data-id="${o.id}">Delete</button>
+          <button class="btn danger" data-action="delete" data-id="${o.id}">Delete</button>
           <button class="btn" data-action="set-total" data-id="${o.id}">Set total</button>
         </div>
+        ${o.payment?.proofUrl ? `<p><a href="${o.payment.proofUrl}" target="_blank">View Payment Proof</a></p>` : ''}
       `;
       ordersEl.appendChild(div);
     });
@@ -130,7 +108,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   exportBtn.addEventListener("click", () => {
     if (!unlocked) return alert("Unlock admin first.");
-    const data = fb?.db ? "Export from Firestore not implemented" : readLocalOrders();
+    // Export data will only work for LocalStorage mode unless further Firestore logic is added
+    const data = fb?.db ? "Export from Firestore not implemented (showing local data as fallback)" : readLocalOrders();
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -146,9 +125,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const action = btn.getAttribute("data-action");
 
     if (fb?.db) {
+      // Logic for Firebase updates
       const ref = fb.db.collection("orders").doc(id);
-      if (action === "mark-paid") await ref.update({ paymentStatus: "paid" });
-      if (action === "mark-pending") await ref.update({ paymentStatus: "pending" });
+      if (action === "mark-paid") await ref.update({ "payment.status": "paid" });
+      if (action === "mark-pending") await ref.update({ "payment.status": "pending" });
       if (action === "complete") await ref.update({ status: "completed" });
       if (action === "cancel") await ref.update({ status: "cancelled" });
       if (action === "delete") {
@@ -160,11 +140,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!isNaN(newTotal) && newTotal >= 0) await ref.update({ subtotal: newTotal });
       }
     } else {
+      // Logic for Local Storage updates
       const orders = readLocalOrders();
       const idx = orders.findIndex(o => o.id === id);
       if (idx === -1) return;
-      if (action === "mark-paid") orders[idx].paymentStatus = "paid";
-      if (action === "mark-pending") orders[idx].paymentStatus = "pending";
+      if (action === "mark-paid") orders[idx].payment.status = "paid";
+      if (action === "mark-pending") orders[idx].payment.status = "pending";
       if (action === "complete") orders[idx].status = "completed";
       if (action === "cancel") orders[idx].status = "cancelled";
       if (action === "delete") {
@@ -181,5 +162,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     await fetchOrders();
   });
 
-  await fetchOrders();
+  fetchOrders();
 });
