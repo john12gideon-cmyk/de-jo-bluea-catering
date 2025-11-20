@@ -1,12 +1,12 @@
 :root {
-  --primary: #4a4e69;       /* Deep slate blue */
-  --accent: #9a8c98;        /* Muted mauve */
-  --highlight: #c9ada7;     /* Soft rose beige */
-  --light: #f2e9e4;         /* Creamy white */
-  --dark: #222;             /* Deep charcoal */
-  --muted: #666;            /* Soft gray */
-  --success: #2a9d8f;       /* Teal green */
-  --error: #e63946;         /* Soft red */
+  --primary: #4a4e69;
+  --accent: #9a8c98;
+  --highlight: #c9ada7;
+  --light: #f2e9e4;
+  --dark: #222;
+  --muted: #666;
+  --success: #2a9d8f;
+  --error: #e63946;
 }
 
 /* ===== Order Form ===== */
@@ -167,7 +167,7 @@
 }
 
 #ratingSection .stars span.active {
-  color: #f5b301; /* star gold */
+  color: #f5b301;
 }
 
 #ratingSection #feedbackText {
