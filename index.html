@@ -262,36 +262,35 @@
       <div class="modal-body">
         <h4>Your details</h4>
 <form id="orderForm">
-  <input type="text" name="fullName" required>
-  <input type="tel" name="phone" required>
-  <input type="email" name="email" required>
-  <!-- other fields -->
+  <input type="text" name="fullName" placeholder="Full name" required />
+  <input type="tel" name="phone" placeholder="Phone number" required />
+  <input type="email" name="email" placeholder="Email address" required />
+  <textarea name="notes" placeholder="Pickup time, delivery directions, etc."></textarea>
+
+  <h4>Payment</h4>
+  <div class="bank-box">
+    <p><strong>Bank:</strong> Globus bank limited</p>
+    <p><strong>Account name:</strong> Ofon Gideon Matthew</p>
+    <p><strong>Account number:</strong> 2003362084</p>
+    <p class="muted">Please make a bank transfer for the total amount. Upload proof below if available.</p>
+  </div>
+
+  <div class="form-row">
+    <label>Upload transfer receipt (optional)</label>
+    <input type="file" id="paymentProof" accept="image/*,.pdf" />
+  </div>
+
+  <div class="form-row">
+    <label>Confirm payment status</label>
+    <select name="paymentStatus" required>
+      <option value="pending">I will transfer now</option>
+      <option value="paid">I have transferred</option>
+    </select>
+  </div>
+
   <button type="submit" class="btn primary">Submit order</button>
+  <div id="checkoutNotice" class="notice"></div>
 </form>
-
-          <h4>Payment</h4>
-          <div class="bank-box">
-            <p><strong>Bank:</strong> Globus bank limited</p>
-            <p><strong>Account name:</strong> Ofofon Gideon Matthew</p>
-            <p><strong>Account number:</strong> 2003362084</p>
-            <p class="muted">Please make a bank transfer for the total amount. Upload proof below if available.</p>
-          </div>
-
-          <div class="form-row">
-            <label>Upload transfer receipt (optional)</label>
-            <input type="file" id="paymentProof" accept="image/*,.pdf"/>
-          </div>
-
-          <div class="form-row">
-            <label>Confirm payment status</label>
-            <select name="paymentStatus" required>
-              <option value="pending">I will transfer now</option>
-              <option value="paid">I have transferred</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn primary">Submit order</button>
-        </form>
 
         <div id="checkoutNotice" class="notice"></div>
       </div>
