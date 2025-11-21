@@ -70,3 +70,43 @@ body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hel
 @keyframes fadeIn { to { opacity: 1; } }
 @keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* === Animations === */
+.animate-fade-in {
+  animation: fadeIn 1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.animate-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* === Button Styling === */
+.btn-cream {
+  background: var(--cream);
+  color: var(--maroon);
+  border: 2px solid var(--maroon);
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn-cream:hover {
+  transform: scale(1.05);
+}
