@@ -1,105 +1,72 @@
-/* ===== 0. Configuration & Variables ===== */
 :root {
-  --primary: #4a4e69;
-  --accent: #9a8c98;
-  --highlight: #c9ada7;
-  --light: #f2e9e4;
-  --dark: #222;
-  --muted: #666;
-  --success: #2a9d8f;
-  --error: #e63946;
-  --warning: #f77f00; /* Added for warnings/notes */
-  --font-family: 'Arial', sans-serif;
+  --maroon: #5a2a29;
+  --cream: #f2e8dc;
+  --accent: #c88b6f;
+  --dark: #2a1f1e;
+}
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+.font-display { font-family: "Georgia", "Times New Roman", serif; }
+.bg-maroon { background: var(--maroon); }
+.text-maroon { color: var(--maroon); }
+.bg-cream { background: var(--cream); }
+.text-cream { color: var(--cream); }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+.link { color: var(--maroon); text-decoration: none; opacity: 0.9; }
+.link:hover { opacity: 1; }
+
+.btn { padding: 10px 16px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+.btn-maroon { background: var(--maroon); color: var(--cream); }
+.btn-cream { background: var(--cream); color: var(--maroon); border-color: var(--maroon); }
+.icon-btn { background: transparent; border: none; cursor: pointer; font-size: 18px; }
+
+.hero { position: relative; padding: 60px 0; }
+.hero-content { max-width: 640px; padding: 24px; }
+.hero-title { font-size: 36px; font-family: "Georgia", serif; color: var(--maroon); }
+.hero-subtitle { margin-top: 8px; color: var(--dark); opacity: 0.8; }
+.hero-images { position: absolute; right: 16px; top: 40px; display: flex; gap: 16px; }
+.hero-img { width: 180px; height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+
+.section { padding: 40px 0; }
+.section-title { font-size: 28px; font-family: "Georgia", serif; color: var(--maroon); }
+.section-subtitle { font-size: 20px; color: var(--maroon); }
+.section-note { color: var(--dark); opacity: 0.8; margin-bottom: 16px; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+@media (max-width: 900px) {
+  .grid, .grid-3 { grid-template-columns: 1fr; }
+  .hero-images { position: static; margin-top: 20px; }
 }
 
-/* ------------------------------------------- */
-/* ===== 1. Global & Reset (Crucial for deployed look) ===== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+.card { background: #fff; border: 1px solid #eadfd3; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+.card img { width: 100%; height: 160px; object-fit: cover; }
+.card-title { font-size: 18px; margin: 10px 12px 0; }
+.price { margin: 6px 12px; color: var(--dark); opacity: .85; }
+.qty-row { display: flex; align-items: center; gap: 12px; margin: 10px 12px; }
+.qty-btn { width: 34px; height: 34px; border-radius: 6px; border: 1px solid #d9cfc2; background: #fff; cursor: pointer; }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--light); /* Sets the global background */
-  color: var(--dark);
-  line-height: 1.6;
-}
+.image-frame { border-radius: 12px; overflow: hidden; box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+.image-frame img { width: 100%; height: 340px; object-fit: cover; }
 
-h1, h2, h3, h4 {
-  color: var(--primary);
-  margin-top: 1rem;
-}
+.cart-panel { position: fixed; right: 16px; top: 80px; width: 320px; background: #fff; border: 1px solid #eadfd3; border-radius: 12px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 40; display: none; }
+.floating-cart-btn { position: fixed; right: 16px; bottom: 16px; width: 52px; height: 52px; border-radius: 50%; background: var(--maroon); color: var(--cream); border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2); cursor: pointer; z-index: 30; }
 
-/* Global button styles */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; z-index: 50; }
+.modal-box { width: 92%; max-width: 740px; background: #fff; border-radius: 12px; padding: 16px; }
 
-/* Primary Button (used in form and admin) */
-.btn.primary {
-  background-color: var(--primary);
-  color: var(--light);
-}
+.form label { display: block; margin-top: 12px; color: var(--dark); }
+.form input, .form textarea, .form select { width: 100%; margin-top: 6px; padding: 10px; border: 1px solid #d9cfc2; border-radius: 8px; }
 
-.btn.primary:hover {
-  background-color: var(--accent);
-}
+.footer { background: var(--maroon); color: var(--cream); padding: 30px 0; margin-top: 40px; }
 
-/* Default button */
-.btn {
-  background-color: var(--highlight);
-  color: var(--dark);
-}
-.btn:hover {
-    background-color: var(--accent);
-}
+/* Animations */
+.animate-fade-in { animation: fadeIn .8s ease forwards; opacity: 0; }
+.animate-rise-in { animation: riseIn .8s ease .4s forwards; opacity: 0; }
+.animate-reveal { opacity: 0; transform: translateY(10px); }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.delay-1 { animation-delay: .6s; }
+.delay-2 { animation-delay: 1.2s; }
 
-/* Danger/Cancel button */
-.btn.danger {
-  background-color: var(--error);
-  color: var(--light);
-}
-.btn.danger:hover {
-  background-color: #c42938;
-}
-
-/* ------------------------------------------- */
-/* ===== 2. Layout & Main Content (Fixes spacing/center issues) ===== */
-.container {
-  max-width: 1200px; /* Standard main content width */
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-header {
-  background-color: var(--primary);
-  color: var(--light);
-  padding: 1rem 0;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-header h1 {
-  color: var(--light);
-}
-
-/* Card styles for products/items */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 1rem 0;
-}
-
-.card {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius:
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
