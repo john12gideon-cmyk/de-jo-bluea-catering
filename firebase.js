@@ -1,52 +1,21 @@
-// firebase.js
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// ====== Firebase Configuration (Use the complete keys here) ======
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB6asthrjc-7nv4JlyCt0on9HK-2JMD76C",
-  authDomain: "de-jo-bluea.firebaseapp.com",
-  projectId: "de-jo-bluea",
-  storageBucket: "de-jo-bluea.appspot.com",
-  messagingSenderId: "213345773472",
-  appId: "1:213345773472:web:5d0fbed7b68741e2c2e6c5",
-  measurementId: "G-V187CTTKMT" // Added measurementId for completeness
+  apiKey: "AIzaSyC7WUC_ujbDuZl_4bAfLbfaTLaT_ferYTw",
+  authDomain: "de-jo-blue.firebaseapp.com",
+  projectId: "de-jo-blue",
+  storageBucket: "de-jo-blue.firebasestorage.app",
+  messagingSenderId: "364732854636",
+  appId: "1:364732854636:web:996a9b849c5a7d1b8a8349",
+  measurementId: "G-RKBCX1YXP1"
 };
 
-// Compatibility script paths (used by both main.js and admin.js to load the SDKs)
-const firebaseScripts = [
-  "https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js",
-  "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js",
-  "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage-compat.js"
-];
-
-// Function to load and initialize Firebase if the config is present
-function loadFirebaseIfConfigured() {
-  return new Promise((resolve) => {
-    // Only proceed if API key is provided
-    if (!firebaseConfig.apiKey) {
-        console.warn("Firebase API key is missing. Using LocalStorage mode.");
-        resolve(null);
-        return;
-    }
-
-    let loaded = 0;
-    firebaseScripts.forEach(src => {
-      const s = document.createElement('script');
-      s.src = src;
-      s.onload = () => {
-        loaded++;
-        if (loaded === firebaseScripts.length) {
-          // Initialize using the global 'firebase' object from the compat scripts
-          firebase.initializeApp(firebaseConfig);
-          resolve({
-            db: firebase.firestore(),
-            storage: firebase.storage()
-          });
-        }
-      };
-      document.head.appendChild(s);
-    });
-  });
-}
-
-// Export the config and the loader function so other files can use them
-export { firebaseConfig, loadFirebaseIfConfigured };
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
