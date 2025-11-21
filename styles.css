@@ -110,3 +110,14 @@ body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hel
 .btn-cream:hover {
   transform: scale(1.05);
 }
+
+/* Delay classes for staggered float */
+.delay-1 { animation-delay: 2s; }
+.delay-2 { animation-delay: 4s; }
+
+.hero-img {
+  transition: transform 0.3s ease;
+}
+.hero-img:hover {
+  transform: scale(1.1);
+}
