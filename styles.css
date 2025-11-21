@@ -139,3 +139,16 @@ body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hel
   border-radius: 8px;
   margin-bottom: 12px;
 }
+
+footer {
+  text-align: center;
+}
+
+footer h4 {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+footer p {
+  line-height: 1.6;
+}
