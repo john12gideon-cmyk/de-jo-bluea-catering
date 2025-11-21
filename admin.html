@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin - Orders</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — DE-JO-BLUE</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <div class="admin-panel">
-    <h2>Admin - Orders</h2>
+<body class="bg-cream text-maroon">
+  <header class="container flex items-center justify-between py-4">
+    <div class="font-display text-2xl">Admin Panel</div>
+    <a href="index.html" class="link">Back to site</a>
+  </header>
 
-    <div class="login-box">
-      <label for="adminPass">Admin passcode</label>
-      <input type="password" id="adminPass" placeholder="Enter passcode"/>
-      <button id="loginBtn" class="btn primary">Unlock</button>
-      <p class="muted">Passcode is set in <code>admin.js</code></p>
+  <main class="container section">
+    <div id="loginBox" class="card" style="padding:16px;">
+      <h3 class="font-display">Admin login</h3>
+      <p class="section-note">Enter admin password to access orders.</p>
+      <label>Password <input id="adminPass" type="password" /></label>
+      <button id="loginBtn" class="btn btn-maroon mt-3">Login</button>
+      <p class="muted mt-2">Hint: Use your provided password.</p>
     </div>
 
-    <div id="adminPanel" style="display:none;">
-      <h2>Orders Dashboard</h2>
-
-      <div class="filter-bar">
-        <select id="filterPaid">
-          <option value="all">All</option>
-          <option value="paid">Paid</option>
-          <option value="pending">Pending</option>
-        </select>
-        <input type="text" id="searchInput" placeholder="Search by name or phone"/>
-        <button id="refreshBtn" class="btn">Refresh</button>
-        <button id="exportBtn" class="btn">Export JSON</button>
+    <div id="adminBox" style="display:none;">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display">Orders</h3>
+        <button id="logoutBtn" class="btn btn-cream">Logout</button>
       </div>
 
-      <div id="orders" class="orders"></div>
-    </div>
-  </div>
+      <div class="grid" style="margin-top:16px;">
+        <div class="card" style="padding:12px;">
+          <label>Search by name/email <input id="searchQuery" /></label>
+          <label class="mt-2">Filter status
+            <select id="statusFilter">
+              <option value="">All</option>
+              <option value="submitted">Submitted</option>
+              <option value="confirmed">Payment confirmed</option>
+            </select>
+          </label>
+          <button id="refreshBtn" class="btn btn-maroon mt-3">Refresh</button>
+        </div>
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="admin.js"></script>
+        <div class="card" style="padding:12px; grid-column: span 2;">
+          <div id="ordersList"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="firebase.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>
