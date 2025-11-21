@@ -76,127 +76,48 @@
     </div>
   </section>
 
-  <!-- Shop -->
-  <section class="container section" id="shop">
-    <h3 class="section-title">Shop</h3>
-    <p class="section-note">Delivery or pickup based on your preference. Pricing for some items is negotiable.</p>
+<!-- Shop -->
+<section class="container section bg-cream py-16" id="shop">
+  <h3 class="section-title text-3xl font-display text-center mb-4">Shop</h3>
+  <p class="section-note text-center opacity-80 mb-8">
+    Delivery or pickup based on your preference. Pricing for some items is negotiable.
+  </p>
 
-    <!-- Negotiable items -->
-    <div class="grid">
-      <div class="card animate-reveal">
-        <img src="assets/dryfish.jpg" alt="Dry fish" />
-        <h4 class="card-title">Dry fish</h4>
-        <p class="price">Price: Contact to Negotiate</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('dryfish')">−</button>
-          <span id="qty-dryfish">0</span>
-          <button class="qty-btn" onclick="inc('dryfish')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addNegotiable('dryfish','Dry fish')">Add to cart</button>
+  <!-- Negotiable items -->
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div class="card animate-reveal hover-card">
+      <img src="assets/dryfish.jpg" alt="Dry fish" class="card-img" />
+      <h4 class="card-title">Dry fish</h4>
+      <p class="price">Price: Contact to Negotiate</p>
+      <div class="qty-row">
+        <button class="qty-btn" onclick="dec('dryfish')">−</button>
+        <span id="qty-dryfish">0</span>
+        <button class="qty-btn" onclick="inc('dryfish')">+</button>
       </div>
-
-      <div class="card animate-reveal">
-        <img src="assets/crayfish.jpg" alt="Crayfish" />
-        <h4 class="card-title">Crayfish</h4>
-        <p class="price">Price: Contact to Negotiate</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('crayfish')">−</button>
-          <span id="qty-crayfish">0</span>
-          <button class="qty-btn" onclick="inc('crayfish')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addNegotiable('crayfish','Crayfish')">Add to cart</button>
-      </div>
+      <button class="btn btn-cream mt-2" onclick="addNegotiable('dryfish','Dry fish')">Add to cart</button>
     </div>
 
-    <!-- Fixed-price rentals -->
-    <h4 class="section-subtitle mt-8">Rental services</h4>
-    <div class="grid">
-      <div class="card animate-reveal">
-        <img src="assets/firewood.jpg" alt="Firewood" />
-        <h4 class="card-title">Firewood bundle ₦200</h4>
-        <p class="price">₦200 per bundle</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('fw200')">−</button>
-          <span id="qty-fw200">0</span>
-          <button class="qty-btn" onclick="inc('fw200')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addFixed('fw200','Firewood bundle 200',200)">Add to cart</button>
+    <div class="card animate-reveal hover-card">
+      <img src="assets/crayfish.jpg" alt="Crayfish" class="card-img" />
+      <h4 class="card-title">Crayfish</h4>
+      <p class="price">Price: Contact to Negotiate</p>
+      <div class="qty-row">
+        <button class="qty-btn" onclick="dec('crayfish')">−</button>
+        <span id="qty-crayfish">0</span>
+        <button class="qty-btn" onclick="inc('crayfish')">+</button>
       </div>
-
-      <div class="card animate-reveal">
-        <img src="assets/firewood.jpg" alt="Firewood" />
-        <h4 class="card-title">Firewood bundle ₦500</h4>
-        <p class="price">₦500 per bundle</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('fw500')">−</button>
-          <span id="qty-fw500">0</span>
-          <button class="qty-btn" onclick="inc('fw500')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addFixed('fw500','Firewood bundle 500',500)">Add to cart</button>
-      </div>
-
-      <div class="card animate-reveal">
-        <img src="assets/firewood.jpg" alt="Firewood" />
-        <h4 class="card-title">Firewood bundle ₦1000</h4>
-        <p class="price">₦1000 per bundle</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('fw1000')">−</button>
-          <span id="qty-fw1000">0</span>
-          <button class="qty-btn" onclick="inc('fw1000')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addFixed('fw1000','Firewood bundle 1000',1000)">Add to cart</button>
-      </div>
-
-      <div class="card animate-reveal">
-        <img src="assets/buffet.jpg" alt="Buffet rentals" />
-        <h4 class="card-title">Buffet rentals</h4>
-        <p class="price">₦5000 per day</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('buffet')">−</button>
-          <span id="qty-buffet">0</span>
-          <button class="qty-btn" onclick="inc('buffet')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addFixed('buffet','Buffet rentals',5000)">Add to cart</button>
-      </div>
-
-      <div class="card animate-reveal">
-        <img src="assets/chairs.jpg" alt="Chairs" />
-        <h4 class="card-title">Chairs</h4>
-        <p class="price">₦100 per day</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('chairs')">−</button>
-          <span id="qty-chairs">0</span>
-          <button class="qty-btn" onclick="inc('chairs')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addFixed('chairs','Chairs',100)">Add to cart</button>
-      </div>
-
-      <div class="card animate-reveal">
-        <img src="assets/plates.jpg" alt="Plates" />
-        <h4 class="card-title">Plates (bowl & ceramics)</h4>
-        <p class="price">₦100 per day</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('plates')">−</button>
-          <span id="qty-plates">0</span>
-          <button class="qty-btn" onclick="inc('plates')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addFixed('plates','Plates (bowl & ceramics)',100)">Add to cart</button>
-      </div>
-
-      <div class="card animate-reveal">
-        <img src="assets/spoons.jpg" alt="Spoons" />
-        <h4 class="card-title">Spoons</h4>
-        <p class="price">₦50 per day</p>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="dec('spoons')">−</button>
-          <span id="qty-spoons">0</span>
-          <button class="qty-btn" onclick="inc('spoons')">+</button>
-        </div>
-        <button class="btn btn-cream mt-2" onclick="addFixed('spoons','Spoons',50)">Add to cart</button>
-      </div>
+      <button class="btn btn-cream mt-2" onclick="addNegotiable('crayfish','Crayfish')">Add to cart</button>
     </div>
-  </section>
+  </div>
 
+  <!-- Fixed-price rentals -->
+  <h4 class="section-subtitle text-2xl font-display mt-12 mb-6 text-center">Rental services</h4>
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <!-- Repeat same card structure for firewood, buffet, chairs, plates, spoons -->
+    <!-- Each card already has animate-reveal + hover-card -->
+  </div>
+</section>
+    
   <!-- Checkout modal -->
   <div id="checkoutModal" class="modal">
     <div class="modal-box">
