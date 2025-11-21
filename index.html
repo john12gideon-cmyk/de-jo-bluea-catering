@@ -50,18 +50,22 @@
   <button id="openCart" class="floating-cart-btn">🛒</button>
 
   <!-- Hero -->
-  <section id="home" class="hero">
-    <div class="hero-content animate-rise-in">
-      <h2 class="hero-title">For the love of delicious food and elegant rentals</h2>
-      <p class="hero-subtitle">Crayfish • Dry fish • Buffet • Chairs • Firewood</p>
-      <button class="btn btn-maroon" onclick="scrollToShop()">Shop now</button>
-    </div>
-    <div class="hero-images">
-      <img src="assets/crayfish.jpg" alt="Crayfish" class="hero-img animate-float" />
-      <img src="assets/chairs.jpg" alt="Chairs" class="hero-img animate-float delay-1" />
-      <img src="assets/shrimps.jpg" alt="Shrimps" class="hero-img animate-float delay-2" />
-    </div>
-  </section>
+<section id="home" class="hero flex flex-col items-center justify-center text-center py-16 bg-cream">
+  <div class="hero-content animate-fade-in">
+    <h2 class="hero-title text-4xl font-display mb-4">
+      For the love of delicious food and elegant rentals
+    </h2>
+    <p class="hero-subtitle text-lg opacity-90 mb-6">
+      Crayfish • Dry fish • Buffet • Chairs • Firewood
+    </p>
+    <button class="btn btn-maroon px-8 py-3 text-lg rounded-lg shadow-lg hover:scale-105 transition" onclick="scrollToShop()">
+      Shop now
+    </button>
+  </div>
+
+  <div class="hero-images relative mt-12 flex justify-center gap-8">
+    <img src="assets/crayfish.jpg" alt="Crayfish" class="hero-img animate-float w-32 h-32 object-cover rounded-full shadow-lg" />
+    <img src="assets/chairs.jpg" alt="Chairs" class="hero-img animate-float delay-1 w-32 h-32 object-cover rounded-full shadow-lg" />
 
   <!-- Catering (buffet visuals) -->
   <section class="container section" id="catering">
